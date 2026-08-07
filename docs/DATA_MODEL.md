@@ -4,6 +4,14 @@ Este documento é desenho, não migration aplicada. Os nomes podem evoluir antes
 
 ## Núcleo
 
+### `platform_users`
+
+Identidade operacional controlada pelo servidor. O primeiro registo reservado tem identificador `dabranches`, nome apresentado `Diogo Abranches` e papel `owner`. Não usa email como identificador de login.
+
+### `authentication_credentials` e `authentication_attempts`
+
+Credencial PIN guardada apenas como hash com salt e registo de tentativas/bloqueios. Estas estruturas ficam em schema privado e nunca são expostas directamente ao browser.
+
 ### `accounts`
 
 Identifica conta, balcão, moeda e série operacional. Uma série de posições pertence a uma conta/moeda.

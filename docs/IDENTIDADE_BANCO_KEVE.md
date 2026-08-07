@@ -24,7 +24,7 @@ Actualizado em: 2026-08-07
 - Eficiência significa reduzir cliques e trabalho manual sem esconder excepções.
 - A linguagem deve ser clara, profissional e orientada à acção.
 - Usar a assinatura institucional com contenção; não transformar ecrãs operacionais em comunicação publicitária.
-- O logótipo final deve ser um activo oficial fornecido/autorizado pelo Banco. Marcas provisórias criadas em CSS ou para PWA devem ser identificadas como tal até à entrega desse activo.
+- A aplicação reutiliza o logótipo Keve verde já presente no projecto interno Reconciliação EMIS, validado visualmente contra o site institucional actual. O ícone compacto da PWA permanece provisório até existir um ícone oficial próprio para a ferramenta STC.
 
 ## Segurança de marca e informação
 

@@ -16,6 +16,7 @@ Actualizado em: 2026-08-07
 - O ecrã de Reconciliação já demonstra selecção múltipla e soma exacta em tempo real com dados explicitamente marcados como amostra; exportação CSV da amostra é funcional.
 - PWA preparada e validada localmente com manifest, ícone, service worker e cache de aplicação.
 - Ainda não existe URL pública: a publicação foi suspensa porque a interface contém totais financeiros reais e o endereço `workers.dev` seria público. Exige aprovação explícita dessa exposição ou remoção/protecção dos dados.
+- Autenticação decidida: proprietário `dabranches`, apresentado como `Diogo Abranches`, login visível sem email e apenas por PIN, verificado no servidor com bloqueio e auditoria. Implementação descrita no ADR 0004; nenhum PIN foi criado ou armazenado.
 
 ## Evidência funcional principal
 
