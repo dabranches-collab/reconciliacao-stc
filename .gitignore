@@ -1,0 +1,10 @@
+node_modules/
+__pycache__/
+*.pyc
+.tmp/
+analysis-output/
+.env
+.env.*
+!.env.example
+*.xlsx
+*.xls
