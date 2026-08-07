@@ -106,6 +106,8 @@ Não foi demonstrada a ligação entre as 4.000 linhas `STC - Compensação RCT`
 
 Ainda não se sabe por que 1.117 movimentos negativos de 06/08 foram fechados e 686 permaneceram abertos. É necessário descobrir uma referência, ficheiro auxiliar, regra de ordenação ou decisão operacional.
 
+A hipótese de um cutoff/FIFO simples foi testada e rejeitada: as 686 pendências não formam um sufixo contínuo do extracto. Existem créditos pendentes intercalados com movimentos fechados. A ordem relativa das 686 linhas é, contudo, exactamente a mesma no extracto e na posição final.
+
 ### NÃO DETERMINADA — campos auxiliares
 
 `OBS`, `DO`, `Ordenante`, `Beneficiário`, `IBAN` e `BIC` existem na posição, mas a sua origem e utilização no matching não estão demonstradas. Não inventar significados.
@@ -133,3 +135,30 @@ Antes de aprovar uma regra automática:
 6. obter tolerância oficial e manter cálculos em unidades mínimas exactas.
 
 Até lá, a cobertura comprovada da **transição** é 100%, mas a cobertura de uma **regra automática aprovada** permanece 0%. A candidata mais simples (valor oposto) cobre no máximo 22,554% do bloco fechado e ainda não está aprovada.
+
+## 7. Decomposição sequencial adicional
+
+Ao percorrer os movimentos fechados na ordem original do extracto, excluindo as 686 pendências, o saldo acumulado atinge exactamente zero em seis fronteiras. O resultado manual pode ser particionado assim:
+
+| Grupo observado | Pendências anteriores | Movimentos novos | Total | Saldo |
+| --- | ---: | ---: | ---: | ---: |
+| 1 | 1.320 | 4.618 | 5.938 | 0,00 |
+| 2 | 0 | 3.050 | 3.050 | 0,00 |
+| 3 | 0 | 2.802 | 2.802 | 0,00 |
+| 4 | 0 | 195 | 195 | 0,00 |
+| 5 | 0 | 2 | 2 | 0,00 |
+| 6 | 0 | 2 | 2 | 0,00 |
+
+Os grupos 5 e 6 são pares directos `STC - ICX enviado - Trf. Crédito`. O grupo 4 contém 193 linhas de compensação RCT negativas e duas transferências STC positivas. Os três grupos grandes combinam transferências, pagamentos de salários, compensação RCT e outras famílias.
+
+Esta decomposição confirma que o fecho manual contém lotes auditáveis de soma zero. Ainda não demonstra o algoritmo que escolhe os membros dos grupos grandes, porque durante 06/08 alguns créditos são excluídos no meio da sequência.
+
+## 8. Artefactos manuais e origem do workbook final
+
+- Não existem filtros automáticos, tabelas Excel, tabelas dinâmicas ou comentários funcionais nas folhas `STC`/`Rec.` que codifiquem a escolha.
+- Os comentários do workbook de 31/07 identificam apenas os relatórios Banka e Balancete Diário e os respectivos autores/metadados.
+- O workbook de 06/08 contém uma ligação externa ao original no SharePoint da DCT: `BK_Reconciliação 2521251_STC 06_08_2026_AKZ.xlsx`.
+- A cópia local `..._Diogo.xlsx` perdeu a folha `BL`, deixando `STC!I9` dependente dessa ligação externa.
+- A tentativa read-only de consultar o original encontrou autenticação empresarial obrigatória. O conector disponível está associado a uma conta Microsoft pessoal e o browser não possui sessão empresarial activa.
+
+O original SharePoint é agora a fonte adicional prioritária, pois pode preservar o balancete e outros artefactos removidos da cópia local.

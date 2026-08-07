@@ -22,10 +22,12 @@ Actualizado em: 2026-08-07
 - Todas as 1.320 pendências anteriores foram fechadas.
 - As 686 pendências finais são movimentos novos de 06/08, todos com valor negativo.
 - Pares de valores exactamente opostos cobrem no máximo 2.704 linhas (22,554% do bloco fechado); só 1.318 linhas formam pares de valor não ambíguos.
+- O resultado fechado divide-se em seis blocos sequenciais de soma zero: 5.938, 3.050, 2.802, 195, 2 e 2 movimentos.
+- A hipótese de cutoff/FIFO simples foi rejeitada: as pendências de 06/08 estão intercaladas, embora preservem a ordem do extracto.
 
 ## Limite actual
 
-Foi demonstrado o resultado manual, não a decomposição segura de todas as 11.989 linhas em grupos contabilísticos independentes. Número de operação e valor oposto não explicam sozinhos o universo fechado. Não automatizar o fecho global apenas porque o bloco agregado soma zero.
+Foram demonstrados seis grupos de saldo zero no resultado manual, mas não a regra segura de composição dos três grupos grandes. Número de operação, valor oposto e FIFO simples não explicam sozinhos o universo fechado. Não automatizar o fecho global apenas porque o bloco agregado soma zero.
 
 ## Infraestrutura
 
@@ -36,4 +38,4 @@ Foi demonstrado o resultado manual, não a decomposição segura de todas as 11.
 
 ## Próximo marco
 
-Obter ou identificar evidência que ligue os movimentos de compensação agregados às transferências/salários individuais e explique exactamente quais movimentos de 06/08 entram no fecho. Só depois aprovar a primeira versão das regras automáticas.
+Obter o workbook original `BK_Reconciliação 2521251_STC 06_08_2026_AKZ.xlsx` no SharePoint da DCT, ou evidência equivalente, para ligar compensações agregadas às transferências/salários individuais e explicar exactamente quais movimentos de 06/08 entram no fecho. Só depois aprovar a primeira versão das regras automáticas.

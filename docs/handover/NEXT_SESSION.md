@@ -4,18 +4,18 @@ Actualizado em: 2026-08-07
 
 ## Estado imediato
 
-- Primeira análise documental concluída.
+- Primeira análise documental concluída e aprofundada com análise da selecção de 06/08.
 - Transição 31/07 → 06/08 reproduzida integralmente por identidade de movimentos.
 - Infraestrutura confirmada sem alterações: Supabase vazio e saudável; Worker existente com `Hello world`.
 - Nenhuma regra contabilística implementada.
 
 ## Trabalho incompleto / bloqueio funcional
 
-Explicar como o processo associa os débitos agregados `STC - Compensação RCT` às linhas negativas individuais e como escolhe, em 06/08, 1.117 linhas fechadas versus 686 pendentes.
+O resultado manual divide-se em seis grupos sequenciais de saldo zero, mas os três grupos grandes ainda não têm regra de composição demonstrada. Cutoff/FIFO simples foi rejeitado. O workbook original SharePoint não está acessível na sessão empresarial actual.
 
 ## Próximo passo
 
-Procurar evidência adicional nos ficheiros auxiliares/processo humano e validar com o utilizador. Só depois desenhar a versão 1 das regras e respectivos testes.
+Obter uma cópia autorizada ou acesso read-only ao original SharePoint `BK_Reconciliação 2521251_STC 06_08_2026_AKZ.xlsx`. Depois comparar a folha `BL` e quaisquer metadados intactos com a cópia `Diogo` e validar a composição dos grupos grandes.
 
 ## Verificações a repetir
 

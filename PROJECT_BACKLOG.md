@@ -2,11 +2,14 @@
 
 ## Prioridade imediata
 
+- [ ] Obter acesso read-only ou uma cópia local autorizada do workbook original SharePoint `BK_Reconciliação 2521251_STC 06_08_2026_AKZ.xlsx`; a cópia `Diogo` perdeu a folha `BL`.
 - [ ] Validar com o utilizador/processo operacional como são escolhidas as 1.117 linhas negativas de 06/08 fechadas e as 686 que permanecem pendentes.
 - [ ] Procurar no workbook por metadados, ordenantes, beneficiários, IBAN, BIC ou documentos auxiliares que definam grupos menores; os campos existem na posição, mas estão maioritariamente vazios na amostra.
 - [ ] Determinar a relação entre `STC - Compensação RCT` e os pagamentos/transferências individuais.
 - [ ] Definir tolerância monetária oficial; internamente usar unidades mínimas inteiras.
 - [ ] Validar regras candidatas com outro período completo e medir falsos positivos/falsos negativos.
+- [x] Testar cutoff/FIFO simples: rejeitado porque as pendências estão intercaladas.
+- [x] Decompor o resultado manual em fronteiras sequenciais de saldo zero: seis grupos encontrados.
 
 ## Fundação técnica — após validação funcional
 
