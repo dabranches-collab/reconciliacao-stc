@@ -42,8 +42,15 @@ async function sha256(value: string) {
 }
 
 async function derivePin(pin: string, salt: string, pepper: string, iterations: number) {
-  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(`${pin}:${pepper}`), "PBKDF2", false, ["deriveBits"]);
-  return hex(await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: fromHex(salt), iterations }, key, 256));
+  let material = new TextEncoder().encode(`${pin}:${pepper}`);
+  let remaining = iterations;
+  while (remaining > 0) {
+    const roundIterations = Math.min(100000, remaining);
+    const key = await crypto.subtle.importKey("raw", material, "PBKDF2", false, ["deriveBits"]);
+    material = new Uint8Array(await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: fromHex(salt), iterations: roundIterations }, key, 256));
+    remaining -= roundIterations;
+  }
+  return [...material].map((value) => value.toString(16).padStart(2, "0")).join("");
 }
 
 function equalHex(left: string, right: string) {
