@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
-import { formatMoney, parseMoney, sumMoney } from "./domain/money";
-import { knownTransition } from "./domain/knownTransition";
-import { checkTransition } from "./domain/position";
+import { useEffect, useState } from "react";
+import { formatMoney } from "./domain/money";
 
 type View = "painel" | "importar" | "reconciliar" | "pendencias" | "reconciliados" | "posicao" | "relatorios";
-type Movement = { id: string; date: string; operation: string; description: string; amount: bigint; status: "Pendente" | "Proposta" };
+type User = { username: string; display_name?: string; displayName?: string; role: string };
+type Position = { position_date: string; previous_pending_count: number; new_movement_count: number; reconciled_count: number; closing_pending_count: number; accounting_balance_minor: number | string; closing_pending_balance_minor: number | string; difference_minor: number | string; status: string };
+type Group = { sequence_number: number; movement_count: number; balance_minor: number | string; evidence_level: string };
+type Movement = { id: string; movement_date: string; dc: string; amount_minor: number | string; operation: string; description: string; observation: string; document_number: string; state: string };
 
 const views: { id: View; label: string; icon: string }[] = [
   { id: "painel", label: "Painel", icon: "▦" }, { id: "importar", label: "Importar", icon: "⇧" },
@@ -13,50 +14,52 @@ const views: { id: View; label: string; icon: string }[] = [
   { id: "relatorios", label: "Relatórios", icon: "▤" },
 ];
 
-const movements: Movement[] = [
-  { id: "STC-0608-01142", date: "06/08/2026", operation: "RCT", description: "STC — Compensação RCT", amount: parseMoney("-18504231.20"), status: "Pendente" },
-  { id: "STC-0608-03518", date: "06/08/2026", operation: "TRF", description: "Transferência interbancária", amount: parseMoney("12500000"), status: "Proposta" },
-  { id: "STC-0608-03519", date: "06/08/2026", operation: "TRF", description: "Transferência interbancária", amount: parseMoney("6004231.20"), status: "Proposta" },
-  { id: "STC-0608-05201", date: "06/08/2026", operation: "ICX", description: "Operação ICX", amount: parseMoney("-875000"), status: "Pendente" },
-  { id: "STC-0608-05202", date: "06/08/2026", operation: "ICX", description: "Operação ICX", amount: parseMoney("875000"), status: "Proposta" },
-];
+const money = (value: number | string | bigint) => formatMoney(BigInt(value));
 
-const check = checkTransition(knownTransition);
-
-function downloadCsv(rows: Movement[]) {
-  const csv = ["id;data;operacao;descricao;montante;estado", ...rows.map((m) => [m.id, m.date, m.operation, m.description, formatMoney(m.amount), m.status].join(";"))].join("\n");
-  const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
-  const link = document.createElement("a"); link.href = url; link.download = "stc-amostra.csv"; link.click(); URL.revokeObjectURL(url);
+function Login({ onLogin }: { onLogin: (user: User) => void }) {
+  const [pin, setPin] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  async function submit(event: React.FormEvent) {
+    event.preventDefault(); setBusy(true); setError("");
+    const result = await fetch("/api/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username: "dabranches", pin }) }).catch(() => null);
+    const data = await result?.json().catch(() => ({}));
+    setBusy(false);
+    if (!result?.ok) { setError(data?.error ?? "Não foi possível iniciar sessão."); return; }
+    setPin(""); onLogin(data.user);
+  }
+  return <main className="login-page"><section className="login-card"><img src="/keve-logo-purple.png" alt="Keve — O Banco que avança" /><p className="eyebrow">RECONCILIAÇÃO STC</p><h1>Bem-vindo, Diogo</h1><p>Acesso reservado ao proprietário da plataforma.</p><form onSubmit={submit}><label>Utilizador<input value="dabranches" disabled /></label><label>PIN<input value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 12))} type="password" inputMode="numeric" autoComplete="current-password" minLength={6} required autoFocus /></label>{error && <p className="login-error" role="alert">{error}</p>}<button className="primary" disabled={busy || pin.length < 6}>{busy ? "A validar…" : "Entrar"}</button></form><small>O PIN é verificado no servidor e nunca fica guardado neste dispositivo.</small></section></main>;
 }
 
-function MovementTable({ selectable = false }: { selectable?: boolean }) {
+function MovementTable({ movements, selectable = false }: { movements: Movement[]; selectable?: boolean }) {
   const [selected, setSelected] = useState<string[]>([]);
-  const total = useMemo(() => sumMoney(movements.filter((m) => selected.includes(m.id)).map((m) => m.amount)), [selected]);
-  return <>
-    <div className="table-tools"><div className="search">⌕ <input aria-label="Pesquisar movimentos" placeholder="Pesquisar referência, operação ou valor" /></div><button onClick={() => downloadCsv(movements)}>Exportar CSV</button></div>
-    <div className="table-wrap"><table><thead><tr>{selectable && <th aria-label="Selecção" />}<th>Referência</th><th>Data</th><th>Operação</th><th>Descrição</th><th>Estado</th><th className="amount">Montante (AOA)</th></tr></thead>
-      <tbody>{movements.map((m) => <tr key={m.id}>{selectable && <td><input type="checkbox" checked={selected.includes(m.id)} onChange={() => setSelected((s) => s.includes(m.id) ? s.filter((id) => id !== m.id) : [...s, m.id])} aria-label={`Seleccionar ${m.id}`} /></td>}<td className="mono">{m.id}</td><td>{m.date}</td><td>{m.operation}</td><td>{m.description}</td><td><span className={`status ${m.status === "Proposta" ? "proposal" : ""}`}>{m.status}</span></td><td className={`amount ${m.amount > 0 ? "credit" : "debit"}`}>{formatMoney(m.amount)}</td></tr>)}</tbody></table></div>
-    {selectable && <div className="selection-bar"><span>{selected.length} seleccionados</span><strong>Soma: {formatMoney(total)} AOA</strong><span className={total === 0n && selected.length ? "balanced" : "muted"}>{total === 0n && selected.length ? "Grupo equilibrado" : "A soma deve ser zero"}</span></div>}
-  </>;
+  const total = movements.filter((item) => selected.includes(item.id)).reduce((sum, item) => sum + BigInt(item.amount_minor), 0n);
+  return <><div className="table-tools"><div className="search">⌕ <input aria-label="Pesquisar movimentos" placeholder="Pesquisa será activada no próximo bloco" disabled /></div></div><div className="table-wrap"><table><thead><tr>{selectable && <th />}<th>Data</th><th>Operação</th><th>Descrição</th><th>Documento</th><th className="amount">Montante (AOA)</th></tr></thead><tbody>{movements.map((item) => <tr key={item.id}>{selectable && <td><input type="checkbox" checked={selected.includes(item.id)} onChange={() => setSelected((current) => current.includes(item.id) ? current.filter((id) => id !== item.id) : [...current, item.id])} aria-label={`Seleccionar ${item.id}`} /></td>}<td>{item.movement_date}</td><td>{item.operation}</td><td>{item.description}</td><td className="mono">{item.document_number || "—"}</td><td className={`amount ${BigInt(item.amount_minor) >= 0n ? "credit" : "debit"}`}>{money(item.amount_minor)}</td></tr>)}</tbody></table></div>{selectable && <div className="selection-bar"><span>{selected.length} seleccionados</span><strong>Soma: {formatMoney(total)} AOA</strong><span className={selected.length && total === 0n ? "balanced" : "muted"}>{selected.length && total === 0n ? "Grupo equilibrado" : "A soma deve ser zero"}</span></div>}</>;
 }
 
-function Dashboard({ navigate }: { navigate: (view: View) => void }) {
-  return <><section className="page-heading"><div><p className="eyebrow">POSIÇÃO CONHECIDA · 06/08/2026</p><h2>Visão geral</h2><p>A posição fecha exactamente com o saldo contabilístico.</p></div><button className="primary" onClick={() => navigate("reconciliar")}>Trabalhar movimentos →</button></section>
-    <section className="metrics"><article><span>Universo activo</span><strong>12.675</strong><small>1.320 anteriores + 11.355 novos</small></article><article><span>Reconciliados</span><strong>11.989</strong><small>94,59% do universo</small></article><article><span>Por tratar</span><strong>686</strong><small>Movimentos em aberto</small></article><article className="success"><span>Diferença contabilística</span><strong>{check.valid ? "0,00" : "Rever"}</strong><small>Posição validada</small></article></section>
-    <section className="balance-card"><div><span>Saldo pendente</span><strong>{formatMoney(knownTransition.closingPending.balance)} <small>AOA</small></strong></div><div className="equals">=</div><div><span>Saldo contabilístico</span><strong>{formatMoney(knownTransition.accountingBalance)} <small>AOA</small></strong></div><span className="checkmark">✓</span></section>
-    <section className="split"><article className="panel"><div className="panel-title"><div><span className="kicker">ATENÇÃO OPERACIONAL</span><h3>686 movimentos aguardam tratamento</h3></div><button onClick={() => navigate("pendencias")}>Abrir pendências</button></div><p>Todos são movimentos novos de 06/08/2026 e permanecem no universo activo.</p></article><article className="panel"><span className="kicker">COBERTURA CONHECIDA</span><h3>6 grupos fechados a zero</h3><div className="group-list">{[5938,3050,2802,195,2,2].map((n,i)=><span key={i}>{n.toLocaleString("pt-PT")}</span>)}</div></article></section></>;
-}
-
-function AppView({ view, navigate }: { view: View; navigate: (view: View) => void }) {
-  if (view === "painel") return <Dashboard navigate={navigate} />;
-  if (view === "importar") return <><section className="page-heading"><div><p className="eyebrow">ENTRADA CONTROLADA</p><h2>Importar movimentos</h2><p>Analise o ficheiro antes de o integrar na posição activa.</p></div></section><section className="dropzone"><span>⇧</span><h3>Seleccione um ficheiro STC</h3><p>Excel ou CSV · o ficheiro não será integrado sem validação explícita.</p><label className="primary">Escolher ficheiro<input type="file" accept=".xlsx,.xls,.csv" /></label></section><section className="split"><article className="panel"><span className="kicker">MODO 1</span><h3>Analisar apenas</h3><p>Detecta estrutura, período, duplicados e sobreposição sem alterar a posição.</p></article><article className="panel"><span className="kicker">MODO 2</span><h3>Integrar na reconciliação</h3><p>Disponível depois de a análise do ficheiro passar todas as validações.</p></article></section></>;
-  if (view === "posicao") return <><section className="page-heading"><div><p className="eyebrow">FECHO · 06/08/2026</p><h2>Posição STC</h2><p>Equação completa da transição e controlo contabilístico.</p></div></section><section className="equation"><div><span>Pendentes anteriores</span><strong>1.320</strong></div><b>+</b><div><span>Novos movimentos</span><strong>11.355</strong></div><b>=</b><div><span>Reconciliados</span><strong>11.989</strong></div><b>+</b><div><span>Pendentes finais</span><strong>686</strong></div></section><section className="balance-card"><div><span>Residual</span><strong>{formatMoney(knownTransition.closingPending.balance)} <small>AOA</small></strong></div><div className="equals">−</div><div><span>Contabilidade</span><strong>{formatMoney(knownTransition.accountingBalance)} <small>AOA</small></strong></div><span className="zero">0,00</span></section></>;
-  if (view === "relatorios") return <><section className="page-heading"><div><p className="eyebrow">SAÍDAS</p><h2>Relatórios</h2><p>Exporte informação filtrada e rastreável.</p></div></section><section className="report-grid">{["Posição STC", "Pendências", "Grupos reconciliados", "Movimentos da amostra"].map((name, i)=><article className="panel" key={name}><span className="report-icon">▤</span><h3>{name}</h3><p>{i === 3 ? "Amostra visível no ecrã de trabalho." : "Disponível quando a fonte operacional estiver integrada."}</p>{i === 3 && <button onClick={() => downloadCsv(movements)}>Exportar CSV</button>}</article>)}</section></>;
-  const titles = view === "reconciliar" ? ["Reconciliação", "Seleccione movimentos e confirme grupos cuja soma seja exactamente zero."] : view === "pendencias" ? ["Pendências", "Movimentos que continuam no universo activo e exigem tratamento."] : ["Reconciliados", "Histórico consultável dos movimentos fechados por grupo."];
-  return <><section className="page-heading"><div><p className="eyebrow">ÁREA DE TRABALHO · DADOS DE AMOSTRA</p><h2>{titles[0]}</h2><p>{titles[1]}</p></div></section>{view === "reconciliados" ? <section className="panel empty"><span>✓</span><h3>11.989 movimentos reconciliados</h3><p>O detalhe integral será carregado quando a fonte de dados for integrada. Os seis grupos conhecidos fecham a zero.</p></section> : <MovementTable selectable={view === "reconciliar"} />}</>;
+function Workspace({ user, onLogout }: { user: User; onLogout: () => void }) {
+  const [view, setView] = useState<View>("painel");
+  const [position, setPosition] = useState<Position | null>(null);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [movements, setMovements] = useState<Movement[]>([]);
+  useEffect(() => { void fetch("/api/dashboard").then((r) => r.json()).then((data) => { setPosition(data.position); setGroups(data.groups ?? []); }); }, []);
+  useEffect(() => { if (view === "pendencias" || view === "reconciliar") void fetch("/api/movements?limit=200").then((r) => r.json()).then((data) => setMovements(data.items ?? [])); }, [view]);
+  if (!position) return <main className="loading">A carregar posição STC…</main>;
+  const difference = BigInt(position.difference_minor);
+  const heading = views.find((item) => item.id === view)?.label;
+  let body: React.ReactNode;
+  if (view === "painel") body = <><section className="page-heading"><div><p className="eyebrow">POSIÇÃO VALIDADA · {position.position_date}</p><h2>Visão geral</h2><p>A posição fecha exactamente com o saldo contabilístico.</p></div><button className="primary" onClick={() => setView("reconciliar")}>Trabalhar movimentos →</button></section><section className="metrics"><article><span>Universo de entrada</span><strong>{(position.previous_pending_count + position.new_movement_count).toLocaleString("pt-PT")}</strong><small>{position.previous_pending_count.toLocaleString("pt-PT")} anteriores + {position.new_movement_count.toLocaleString("pt-PT")} novos</small></article><article><span>Reconciliados</span><strong>{position.reconciled_count.toLocaleString("pt-PT")}</strong><small>Fora do motor activo</small></article><article><span>Por tratar</span><strong>{position.closing_pending_count.toLocaleString("pt-PT")}</strong><small>Movimentos activos</small></article><article className="success"><span>Diferença contabilística</span><strong>{money(difference)}</strong><small>Posição validada</small></article></section><section className="balance-card"><div><span>Saldo pendente</span><strong>{money(position.closing_pending_balance_minor)} <small>AOA</small></strong></div><div className="equals">=</div><div><span>Saldo contabilístico</span><strong>{money(position.accounting_balance_minor)} <small>AOA</small></strong></div><span className="checkmark">✓</span></section><section className="panel"><span className="kicker">HISTÓRICO MÍNIMO</span><h3>{groups.length} grupos fechados a zero</h3><div className="group-list">{groups.map((group) => <span key={group.sequence_number}>{group.movement_count.toLocaleString("pt-PT")}</span>)}</div></section></>;
+  else if (view === "pendencias" || view === "reconciliar") body = <><section className="page-heading"><div><p className="eyebrow">UNIVERSO ACTIVO</p><h2>{heading}</h2><p>{position.closing_pending_count} pendências; são apresentadas 200 por página nesta primeira versão.</p></div></section><MovementTable movements={movements} selectable={view === "reconciliar"} /></>;
+  else if (view === "posicao") body = <><section className="page-heading"><div><p className="eyebrow">FECHO · {position.position_date}</p><h2>Posição STC</h2></div></section><section className="equation"><div><span>Pendentes anteriores</span><strong>{position.previous_pending_count}</strong></div><b>+</b><div><span>Novos</span><strong>{position.new_movement_count}</strong></div><b>=</b><div><span>Reconciliados</span><strong>{position.reconciled_count}</strong></div><b>+</b><div><span>Pendentes finais</span><strong>{position.closing_pending_count}</strong></div></section></>;
+  else body = <section className="panel empty"><span>•</span><h3>{heading}</h3><p>Este módulo será activado depois da publicação segura da posição inicial.</p></section>;
+  return <div className="app-shell"><aside><div className="brand"><img src="/keve-logo-green.png" alt="Keve — O Banco que avança" /><strong>Reconciliação STC</strong></div><nav aria-label="Menu principal">{views.map((item) => <button key={item.id} className={view === item.id ? "active" : ""} onClick={() => setView(item.id)}><span>{item.icon}</span>{item.label}{item.id === "pendencias" && <em>{position.closing_pending_count}</em>}</button>)}</nav><div className="side-foot"><strong>{user.display_name ?? user.displayName}</strong><small>Proprietário · @{user.username}</small><button onClick={onLogout}>Terminar sessão</button></div></aside><main><header><div><img className="mobile-logo" src="/keve-logo-green.png" alt="Keve" /><strong>{heading}</strong></div><span className="period">Posição: <b>{position.position_date}</b></span></header><div className="content">{body}</div></main></div>;
 }
 
 export default function App() {
-  const [view, setView] = useState<View>("painel");
-  return <div className="app-shell"><aside><div className="brand"><img src="/keve-logo-green.png" alt="Keve — O Banco que avança" /><strong>Reconciliação STC</strong></div><nav aria-label="Menu principal">{views.map((item)=><button key={item.id} className={view === item.id ? "active" : ""} onClick={() => setView(item.id)}><span>{item.icon}</span>{item.label}{item.id === "pendencias" && <em>686</em>}</button>)}</nav><div className="side-foot"><span className="dot" /> Fase de análise<small>Sem backend ligado</small></div></aside><main><header><div><img className="mobile-logo" src="/keve-logo-green.png" alt="Keve" /><strong>{views.find((item)=>item.id === view)?.label}</strong></div><span className="period">Banco Keve · Posição: <b>06/08/2026</b></span></header><div className="content"><AppView view={view} navigate={setView} /></div></main></div>;
+  const [user, setUser] = useState<User | null>(null);
+  const [checking, setChecking] = useState(true);
+  useEffect(() => { void fetch("/api/session").then(async (result) => { if (result.ok) setUser((await result.json()).user); }).finally(() => setChecking(false)); }, []);
+  if (checking) return <main className="loading">A verificar sessão segura…</main>;
+  if (!user) return <Login onLogin={setUser} />;
+  return <Workspace user={user} onLogout={() => { void fetch("/api/logout", { method: "POST" }).finally(() => setUser(null)); }} />;
 }

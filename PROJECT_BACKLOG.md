@@ -18,7 +18,8 @@
 - [x] Criar a primeira navegação operacional e área de selecção/soma de movimentos.
 - [x] Tornar a aplicação instalável como PWA (manifest, ícone, service worker e estratégia inicial de actualização).
 - [ ] Publicar uma versão segura no Cloudflare Worker já reservado e documentar a URL pública; antes, remover os valores reais da versão pública ou proteger o acesso.
-- [ ] Implementar o ADR 0004: proprietário `dabranches`, provisionamento privado do PIN, rate limiting, sessão segura e auditoria.
+- [ ] Concluir o ADR 0004: gateway, rate limiting, sessão e auditoria implementados; falta provisionar privadamente o PIN e testar ponta a ponta.
+- [x] Aplicar schema Supabase protegido e carregar as 686 pendências iniciais com posição e resumos de auditoria.
 - [ ] Definir schema Supabase reproduzível, RLS e perfis mínimos necessários.
 - [ ] Implementar importação em dois modos: `Analisar apenas` e `Integrar na reconciliação`.
 - [ ] Implementar fingerprint/deduplicação independente do nome do ficheiro.

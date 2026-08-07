@@ -14,6 +14,9 @@ Actualizado em: 2026-08-07
 - Identidade institucional actual do Banco Keve pesquisada em fontes oficiais, aplicada à interface e documentada.
 - A PWA está preparada e validada localmente; `127.0.0.1:4317` continua a ser apenas o servidor local de desenvolvimento.
 - A publicação Cloudflare não foi executada porque a interface expõe totais financeiros reais num endereço público. Requer decisão explícita: dados de demonstração, ou controlo de acesso antes do deploy.
+- Supabase já contém apenas o universo operacional inicial: 686 pendências, posição de controlo e seis resumos de grupos fechados. RLS bloqueia acesso directo e o Security Advisor não apresenta avisos.
+- Proprietário `dabranches` criado sem PIN; terminar gateway Worker e provisionamento privado antes de publicar.
+- Gateway Worker e frontend autenticado implementados; dry-run Cloudflare aprovado e bundle verificado sem totais financeiros conhecidos. Aguardar conclusão do script local de PIN e depois configurar secrets/testar/deploy.
 
 ## Trabalho incompleto / bloqueio funcional
 
@@ -21,7 +24,7 @@ O resultado manual divide-se em seis grupos sequenciais de saldo zero, mas os tr
 
 ## Próximo passo
 
-Obter uma cópia autorizada ou acesso read-only ao original SharePoint `BK_Reconciliação 2521251_STC 06_08_2026_AKZ.xlsx`. Depois comparar a folha `BL` e quaisquer metadados intactos com a cópia `Diogo` e validar a composição dos grupos grandes.
+Terminar a API autenticada do Worker, configurar o PIN de `dabranches` através do fluxo local privado, ligar o frontend aos dados protegidos e só depois publicar a PWA.
 
 ## Verificações a repetir
 

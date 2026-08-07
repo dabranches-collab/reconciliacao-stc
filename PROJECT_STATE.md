@@ -40,7 +40,11 @@ Foram demonstrados seis grupos de saldo zero no resultado manual, mas não a reg
 
 ## Infraestrutura
 
-- Supabase `nhcovhrogmwknhcecgpk`: `ACTIVE_HEALTHY`, Postgres 17, sem tabelas públicas, migrations ou Edge Functions.
+- Supabase `nhcovhrogmwknhcecgpk`: schema operacional aplicado com RLS e políticas de negação ao cliente; Security Advisor sem avisos.
+- Carga inicial concluída: 686 pendências activas de 06/08/2026, saldo `-4.828.241.591,79` AOA, posição validada e seis resumos de grupos fechados (11.989 movimentos, saldo zero).
+- O proprietário `dabranches` existe sem PIN configurado; nenhum acesso público foi activado.
+- Gateway Worker implementado para login PIN, sessões `HttpOnly`, bloqueio progressivo, auditoria e leitura protegida da posição/movimentos; deployment dry-run aprovado.
+- Frontend de produção já não contém totais financeiros embebidos: apresenta login e só carrega dados pela API depois de autenticar.
 - Cloudflare Worker `reconciliacao-stc`: existe; código actual é apenas uma resposta `Hello world`.
 - EMIS local: `main`, checkout preservado read-only; continha três commits locais à frente de `origin/main` no início da análise.
 - BankOps local: clonado apenas para consulta read-only.
