@@ -103,11 +103,12 @@ async function login(request: Request, env: Env) {
 async function dashboard(request: Request, env: Env) {
   const auth = await authenticate(request, env);
   if (!auth) return response({ error: "Não autenticado." }, 401);
-  const [positions, groups] = await Promise.all([
+  const [positions, groups, institutions] = await Promise.all([
     rest(env, "positions?order=position_date.desc&limit=1&select=*"),
     rest(env, "reconciliation_groups?order=sequence_number.asc&select=sequence_number,movement_count,balance_minor,evidence_level"),
+    rest(env, "institutions?active=eq.true&order=short_name.asc&select=code,name,short_name"),
   ]);
-  return response({ user: auth.user, position: (await positions.json())[0] ?? null, groups: await groups.json() });
+  return response({ user: auth.user, position: (await positions.json())[0] ?? null, groups: await groups.json(), institutions: await institutions.json() });
 }
 
 async function listMovements(request: Request, env: Env) {

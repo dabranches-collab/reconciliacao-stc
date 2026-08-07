@@ -52,7 +52,7 @@ Valores monetários devem usar unidades mínimas inteiras ou `numeric` exacto. N
 - `Reconciliados`: lista por grupo colapsado, movimentos expansíveis, regra/versão/saldo e acção simples de reabrir.
 - `Propostas`: padrão de grupos expansíveis, selecção, saldo, confirmar/rejeitar e operações em massa.
 - `Por tratar`: aberto por defeito, paginação server-side, filtros rápidos, pesquisa, colunas configuráveis e exportação filtrada.
-- Claro/escuro, PWA e navegação responsiva alinhados à família Banco Keve.
+- PWA e navegação responsiva com identidade neutra na área consolidada; a identidade de cada banco fica limitada aos respectivos dashboards exclusivos.
 
 ## Fronteiras
 

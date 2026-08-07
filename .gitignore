@@ -9,6 +9,7 @@ __pycache__/
 *.pyc
 .tmp/
 analysis-output/
+supabase/.temp/
 .env
 .env.*
 !.env.example

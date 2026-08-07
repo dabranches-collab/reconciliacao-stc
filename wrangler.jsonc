@@ -3,6 +3,9 @@
   "name": "reconciliacao-stc",
   "main": "./worker/index.ts",
   "compatibility_date": "2026-08-07",
+  "vars": {
+    "SUPABASE_URL": "https://nhcovhrogmwknhcecgpk.supabase.co"
+  },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
