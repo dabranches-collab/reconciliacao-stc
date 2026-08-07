@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "test": "vitest run",
-    "check": "tsc -b && vitest run"
+    "check": "tsc -b && vitest run",
+    "deploy": "pnpm build && wrangler deploy",
+    "deploy:dry": "pnpm build && wrangler deploy --dry-run"
   },
   "dependencies": {
     "@vitejs/plugin-react": "4.7.0",
@@ -19,7 +21,8 @@
     "@types/react": "19.1.9",
     "@types/react-dom": "19.1.7",
     "typescript": "5.9.2",
-    "vitest": "3.2.4"
+    "vitest": "3.2.4",
+    "wrangler": "4.28.1"
   },
   "engines": {
     "node": ">=20"

@@ -1,0 +1,13 @@
+{
+  "name": "Reconciliação STC — Banco Keve",
+  "short_name": "STC",
+  "description": "Plataforma operacional para reconciliação de movimentos STC.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f4fb",
+  "theme_color": "#21105d",
+  "icons": [
+    { "src": "/icons/stc-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

@@ -11,7 +11,9 @@ Actualizado em: 2026-08-07
 - Scaffold React/TypeScript/Vite executável concluído, com modelo conceptual em `docs/DATA_MODEL.md`.
 - Domínio monetário exacto e invariantes conhecidas validados por 6 testes; TypeScript e build de produção aprovados.
 - Menus operacionais e primeira mesa de reconciliação implementados e validados no navegador.
-- Não existe ainda PWA ou publicação pública; `127.0.0.1:4317` é apenas o servidor local de desenvolvimento.
+- Identidade institucional actual do Banco Keve pesquisada em fontes oficiais, aplicada à interface e documentada.
+- A PWA está preparada e validada localmente; `127.0.0.1:4317` continua a ser apenas o servidor local de desenvolvimento.
+- A publicação Cloudflare não foi executada porque a interface expõe totais financeiros reais num endereço público. Requer decisão explícita: dados de demonstração, ou controlo de acesso antes do deploy.
 
 ## Trabalho incompleto / bloqueio funcional
 

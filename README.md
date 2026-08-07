@@ -25,6 +25,7 @@ Ler por esta ordem:
 3. `docs/handover/NEXT_SESSION.md`
 4. `docs/ANALISE_RECONCILIACAO_STC.md`
 5. `ARCHITECTURE.md`
+6. `docs/IDENTIDADE_BANCO_KEVE.md`
 
 ## Fontes externas
 
