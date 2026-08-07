@@ -11,6 +11,9 @@ Actualizado em: 2026-08-07
 - Reconciliação EMIS e BankOps Hub foram analisados read-only.
 - Fundação React 19, TypeScript e Vite criada, sem ligações fictícias nem regras de matching não demonstradas.
 - Domínio monetário usa unidades mínimas inteiras (`bigint`) e a posição conhecida está coberta por seis testes automatizados.
+- Primeira navegação operacional concluída: Painel, Importar, Reconciliação, Pendências, Reconciliados, Posição STC e Relatórios.
+- O ecrã de Reconciliação já demonstra selecção múltipla e soma exacta em tempo real com dados explicitamente marcados como amostra; exportação CSV da amostra é funcional.
+- Ainda não existe URL pública nem PWA. A aplicação corre apenas localmente e não tem manifest/service worker.
 
 ## Evidência funcional principal
 
@@ -49,3 +52,4 @@ Obter o workbook original `BK_Reconciliação 2521251_STC 06_08_2026_AKZ.xlsx` n
 - `tsc -b`: aprovado.
 - `vite build`: aprovado; bundle principal 190,56 kB (60,23 kB gzip).
 - Interface local validada no navegador: valores, contagens e estado de análise apresentados correctamente.
+- Navegação e selecção de um grupo de três movimentos com soma `0,00 AOA` validadas no navegador.

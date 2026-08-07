@@ -10,6 +10,8 @@ Actualizado em: 2026-08-07
 - Nenhuma regra contabilística implementada.
 - Scaffold React/TypeScript/Vite executável concluído, com modelo conceptual em `docs/DATA_MODEL.md`.
 - Domínio monetário exacto e invariantes conhecidas validados por 6 testes; TypeScript e build de produção aprovados.
+- Menus operacionais e primeira mesa de reconciliação implementados e validados no navegador.
+- Não existe ainda PWA ou publicação pública; `127.0.0.1:4317` é apenas o servidor local de desenvolvimento.
 
 ## Trabalho incompleto / bloqueio funcional
 

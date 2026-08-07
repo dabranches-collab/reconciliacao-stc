@@ -15,6 +15,9 @@
 
 - [x] Criar scaffold React/TypeScript/Vite com identidade Banco Keve alinhada à EMIS.
 - [x] Implementar dinheiro exacto em unidades mínimas e testes das invariantes da posição conhecida.
+- [x] Criar a primeira navegação operacional e área de selecção/soma de movimentos.
+- [ ] Tornar a aplicação instalável como PWA (manifest, ícones, service worker e estratégia de actualização).
+- [ ] Publicar uma versão segura no Cloudflare Worker já reservado e documentar a URL pública.
 - [ ] Definir schema Supabase reproduzível, RLS e perfis mínimos necessários.
 - [ ] Implementar importação em dois modos: `Analisar apenas` e `Integrar na reconciliação`.
 - [ ] Implementar fingerprint/deduplicação independente do nome do ficheiro.
