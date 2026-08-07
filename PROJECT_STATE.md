@@ -9,6 +9,8 @@ Actualizado em: 2026-08-07
 - Os três ficheiros STC foram analisados read-only e a transição 31/07 → 06/08 foi reproduzida a 100% por identidade de movimentos.
 - Nenhuma regra contabilística automática foi implementada.
 - Reconciliação EMIS e BankOps Hub foram analisados read-only.
+- Fundação React 19, TypeScript e Vite criada, sem ligações fictícias nem regras de matching não demonstradas.
+- Domínio monetário usa unidades mínimas inteiras (`bigint`) e a posição conhecida está coberta por seis testes automatizados.
 
 ## Evidência funcional principal
 
@@ -24,6 +26,7 @@ Actualizado em: 2026-08-07
 - Pares de valores exactamente opostos cobrem no máximo 2.704 linhas (22,554% do bloco fechado); só 1.318 linhas formam pares de valor não ambíguos.
 - O resultado fechado divide-se em seis blocos sequenciais de soma zero: 5.938, 3.050, 2.802, 195, 2 e 2 movimentos.
 - A hipótese de cutoff/FIFO simples foi rejeitada: as pendências de 06/08 estão intercaladas, embora preservem a ordem do extracto.
+- O saldo contabilístico ligado em `STC!I9` é `-4.828.241.591,79` AOA, exactamente igual à soma dos 686 movimentos residuais; `STC!I13` é zero.
 
 ## Limite actual
 
@@ -39,3 +42,10 @@ Foram demonstrados seis grupos de saldo zero no resultado manual, mas não a reg
 ## Próximo marco
 
 Obter o workbook original `BK_Reconciliação 2521251_STC 06_08_2026_AKZ.xlsx` no SharePoint da DCT, ou evidência equivalente, para ligar compensações agregadas às transferências/salários individuais e explicar exactamente quais movimentos de 06/08 entram no fecho. Só depois aprovar a primeira versão das regras automáticas.
+
+## Verificação técnica mais recente
+
+- `vitest`: 2 ficheiros, 6 testes aprovados.
+- `tsc -b`: aprovado.
+- `vite build`: aprovado; bundle principal 190,56 kB (60,23 kB gzip).
+- Interface local validada no navegador: valores, contagens e estado de análise apresentados correctamente.

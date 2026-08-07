@@ -13,7 +13,8 @@
 
 ## Fundação técnica — após validação funcional
 
-- [ ] Criar scaffold React/TypeScript/Vite com identidade Banco Keve alinhada à EMIS.
+- [x] Criar scaffold React/TypeScript/Vite com identidade Banco Keve alinhada à EMIS.
+- [x] Implementar dinheiro exacto em unidades mínimas e testes das invariantes da posição conhecida.
 - [ ] Definir schema Supabase reproduzível, RLS e perfis mínimos necessários.
 - [ ] Implementar importação em dois modos: `Analisar apenas` e `Integrar na reconciliação`.
 - [ ] Implementar fingerprint/deduplicação independente do nome do ficheiro.
@@ -25,7 +26,7 @@
 
 ## Qualidade futura
 
-- [ ] Testes de exactidão monetária, duplicados, sobreposição, reabertura e concorrência.
+- [ ] Alargar os testes já existentes de exactidão monetária a duplicados, sobreposição, reabertura e concorrência.
 - [ ] Benchmarks com volumes crescentes e planos de consulta.
 - [ ] Testes claro/escuro, desktop em várias escalas, tablet e mobile adequado.
 - [ ] Exportação Excel/CSV do residual respeitando filtros activos.

@@ -8,6 +8,8 @@ Actualizado em: 2026-08-07
 - Transição 31/07 → 06/08 reproduzida integralmente por identidade de movimentos.
 - Infraestrutura confirmada sem alterações: Supabase vazio e saudável; Worker existente com `Hello world`.
 - Nenhuma regra contabilística implementada.
+- Scaffold React/TypeScript/Vite executável concluído, com modelo conceptual em `docs/DATA_MODEL.md`.
+- Domínio monetário exacto e invariantes conhecidas validados por 6 testes; TypeScript e build de produção aprovados.
 
 ## Trabalho incompleto / bloqueio funcional
 

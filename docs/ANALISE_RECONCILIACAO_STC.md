@@ -84,6 +84,17 @@ O conjunto de 11.989 movimentos transferido manualmente para `Rec.` fecha exacta
 
 Esta confirmação descreve o resultado do trabalho humano. Não demonstra que qualquer subconjunto arbitrário com soma zero possa ser fechado automaticamente.
 
+### CONFIRMADA — saldo contabilístico igual ao residual
+
+Na posição de 06/08, a célula `STC!I9` conserva o último valor obtido de `[1]BL!F7`: `-4.828.241.591,79` AOA. A soma exacta dos 686 movimentos mantidos em `STC` é também `-4.828.241.591,79` AOA e a diferença apresentada em `STC!I13` é zero.
+
+Logo, o processo humano escolheu o residual final para satisfazer simultaneamente:
+
+1. `soma dos movimentos pendentes = saldo contabilístico`; e
+2. `soma dos movimentos transferidos para Rec. = 0`.
+
+Esta é uma invariante contabilística confirmada e deve ser sempre validada pela aplicação. Não é, isoladamente, uma regra de selecção: podem existir vários subconjuntos com o mesmo total, e um algoritmo de subset-sum sem critérios adicionais produziria reconciliações inexplicáveis.
+
 ### CONFIRMADA — número de operação não basta
 
 Agrupar as 11.989 linhas por número de operação produz 5.652 grupos, dos quais apenas 54 somam zero. Existem operações de compensação com centenas de parcelas e transferências individuais com números distintos. Logo, “mesmo número de operação + soma zero” não reproduz o fecho.

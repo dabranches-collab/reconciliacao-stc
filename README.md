@@ -4,7 +4,19 @@ Aplicação operacional do Banco Keve para importar extractos STC, reconciliar a
 
 ## Estado
 
-O projecto está na fase de reverse engineering. A transição conhecida de 31/07/2026 para 06/08/2026 foi reproduzida linha a linha, mas ainda não existe autorização funcional para transformar o fecho manual observado numa regra automática.
+O projecto está na fase de reverse engineering com uma fundação React/TypeScript já executável. A transição conhecida de 31/07/2026 para 06/08/2026 foi reproduzida linha a linha, mas ainda não existe evidência funcional para transformar o fecho manual observado numa regra automática.
+
+## Desenvolvimento local
+
+Requer Node.js e pnpm. Depois de instalar as dependências:
+
+```powershell
+pnpm test
+pnpm build
+pnpm dev
+```
+
+Os valores monetários do domínio usam `bigint` em cêntimos; não usar `number` para cálculos contabilísticos.
 
 Ler por esta ordem:
 
