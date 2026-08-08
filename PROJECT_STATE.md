@@ -15,7 +15,7 @@ Actualizado em: 2026-08-07
 - Plataforma exclusiva do Banco Keve, com logótipo Keve sem assinatura no topo. O catálogo mantém Keve, BCI e futuras instituições apenas como fontes/contrapartes dos dados reconciliados.
 - O ecrã de Reconciliação já demonstra selecção múltipla e soma exacta em tempo real com dados explicitamente marcados como amostra; exportação CSV da amostra é funcional.
 - PWA preparada e validada localmente com manifest, ícone, service worker e cache de aplicação.
-- Identidade PWA actualizada com símbolo sóbrio em cobre e castanho, círculo ampliado, transferências opostas e conciliação confirmada; SVG, PNG 192/512 e Apple Touch Icon gerados e validados localmente. Publicação desta revisão aguarda autorização explícita para republicar a aplicação completa.
+- Identidade PWA actualizada com símbolo sóbrio em azul ardósia e azul-noite, círculo ampliado, transferências opostas e conciliação confirmada; SVG, PNG 192/512 e Apple Touch Icon gerados e validados localmente. Publicação desta revisão aguarda autorização explícita para republicar a aplicação completa.
 - Ainda não existe URL pública: a publicação foi suspensa porque a interface contém totais financeiros reais e o endereço `workers.dev` seria público. Exige aprovação explícita dessa exposição ou remoção/protecção dos dados.
 - Autenticação decidida: proprietário `dabranches`, apresentado como `Diogo Abranches`, login visível sem email e apenas por PIN, verificado no servidor com bloqueio e auditoria. Implementação descrita no ADR 0004; nenhum PIN foi criado ou armazenado.
 
