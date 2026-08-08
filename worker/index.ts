@@ -155,6 +155,9 @@ export default {
     headers.set("referrer-policy", "no-referrer");
     headers.set("permissions-policy", "camera=(), microphone=(), geolocation=()");
     headers.set("content-security-policy", "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'");
+    if (url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/service-worker.js") {
+      headers.set("cache-control", "no-store, no-cache, must-revalidate");
+    }
     return new Response(result.body, { status: result.status, statusText: result.statusText, headers });
   },
 };

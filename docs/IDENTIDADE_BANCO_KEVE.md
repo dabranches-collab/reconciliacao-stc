@@ -1,6 +1,6 @@
 # Identidade institucional aplicada à Reconciliação STC
 
-Actualizado em: 2026-08-07
+Actualizado em: 2026-08-08
 
 ## Fontes oficiais
 
@@ -11,7 +11,7 @@ Actualizado em: 2026-08-07
 ## Elementos confirmados
 
 - Assinatura actual: **O Banco que avança**.
-- Cores observadas no logótipo oficial actual: violeta `#4C25F2`, violeta escuro `#31277B`, verde menta `#3EFFB3`, verde vivo `#3DFF00` e teal `#28A49D`.
+- Cores digitais dominantes confirmadas no CSS do site oficial: violeta `#4F51F1`, violeta escuro `#31277B`, verde menta `#3EFFB3`, preto `#1D1D1B` e superfícies `#F4F6FB` / `#F4F4FE`.
 - Missão: criar a melhor experiência bancária para clientes, colaboradores, accionistas e comunidade, potenciando o investimento e o desenvolvimento de Angola.
 - Visão: ser o parceiro de negócios de referência no mercado angolano, participando activamente no desenvolvimento económico e social.
 - Valores: Atitude, Eficiência, Integridade e Rigor.
@@ -24,7 +24,7 @@ Actualizado em: 2026-08-07
 - Eficiência significa reduzir cliques e trabalho manual sem esconder excepções.
 - A linguagem deve ser clara, profissional e orientada à acção.
 - Usar a assinatura institucional com contenção; não transformar ecrãs operacionais em comunicação publicitária.
-- A aplicação reutiliza o logótipo Keve verde já presente no projecto interno Reconciliação EMIS, validado visualmente contra o site institucional actual. O ícone compacto da PWA permanece provisório até existir um ícone oficial próprio para a ferramenta STC.
+- A aplicação reutiliza o logótipo Keve validado visualmente contra o site institucional actual. Na interface, o activo é recortado apenas depois da palavra “Keve”, ocultando a assinatura sem cortar o lettering. O ícone compacto da PWA permanece provisório até existir um ícone oficial próprio para a ferramenta STC.
 
 ## Segurança de marca e informação
 
