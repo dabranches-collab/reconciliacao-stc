@@ -13,6 +13,7 @@ Actualizado em: 2026-08-07
 - Menus operacionais e primeira mesa de reconciliação implementados e validados no navegador.
 - Identidade institucional actual do Banco Keve pesquisada em fontes oficiais, aplicada à interface e documentada.
 - A PWA está preparada e validada localmente; `127.0.0.1:4317` continua a ser apenas o servidor local de desenvolvimento.
+- Novo favicon/ícone PWA concluído localmente em SVG, PNG 192/512 e Apple Touch Icon. O deploy foi deliberadamente retido porque republica a aplicação completa; obter autorização explícita antes de executar.
 - A publicação Cloudflare não foi executada porque a interface expõe totais financeiros reais num endereço público. Requer decisão explícita: dados de demonstração, ou controlo de acesso antes do deploy.
 - Supabase já contém apenas o universo operacional inicial: 686 pendências, posição de controlo e seis resumos de grupos fechados. RLS bloqueia acesso directo e o Security Advisor não apresenta avisos.
 - Proprietário `dabranches` criado sem PIN; terminar gateway Worker e provisionamento privado antes de publicar.
