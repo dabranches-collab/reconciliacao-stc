@@ -1,6 +1,6 @@
 # Reconciliação STC
 
-Aplicação operacional multi-instituição para importar extractos STC, reconciliar automaticamente apenas o que regras demonstráveis permitirem e reduzir ao mínimo os movimentos que exigem tratamento humano. A plataforma começa com Banco Keve e BCI e admite novas instituições sem alterar o núcleo de reconciliação.
+Aplicação operacional exclusiva do Banco Keve para importar extractos STC, reconciliar automaticamente apenas o que regras demonstráveis permitirem e reduzir ao mínimo os movimentos que exigem tratamento humano. O catálogo de instituições identifica as contrapartes/fontes presentes nos dados, sem alterar a propriedade e identidade Keve da plataforma.
 
 ## Estado
 

@@ -12,7 +12,7 @@ Actualizado em: 2026-08-07
 - Fundação React 19, TypeScript e Vite criada, sem ligações fictícias nem regras de matching não demonstradas.
 - Domínio monetário usa unidades mínimas inteiras (`bigint`) e a posição conhecida está coberta por seis testes automatizados.
 - Primeira navegação operacional concluída: Painel, Importar, Reconciliação, Pendências, Reconciliados, Posição STC e Relatórios.
-- Plataforma com identidade global neutra e catálogo multi-instituição. Keve e BCI são os contextos iniciais; identidades bancárias ficam limitadas aos dashboards exclusivos de cada instituição.
+- Plataforma exclusiva do Banco Keve, com logótipo Keve sem assinatura no topo. O catálogo mantém Keve, BCI e futuras instituições apenas como fontes/contrapartes dos dados reconciliados.
 - O ecrã de Reconciliação já demonstra selecção múltipla e soma exacta em tempo real com dados explicitamente marcados como amostra; exportação CSV da amostra é funcional.
 - PWA preparada e validada localmente com manifest, ícone, service worker e cache de aplicação.
 - Ainda não existe URL pública: a publicação foi suspensa porque a interface contém totais financeiros reais e o endereço `workers.dev` seria público. Exige aprovação explícita dessa exposição ou remoção/protecção dos dados.
