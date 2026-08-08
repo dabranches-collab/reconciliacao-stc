@@ -1,5 +1,5 @@
-const CACHE = "stc-shell-v2";
-const SHELL = ["/", "/manifest.webmanifest", "/icons/stc-icon.svg?v=2", "/icons/stc-icon-192.png?v=2", "/icons/stc-icon-512.png?v=2", "/icons/stc-apple-touch-icon.png?v=2"];
+const CACHE = "stc-shell-v3";
+const SHELL = ["/", "/manifest.webmanifest", "/icons/stc-icon.svg?v=3", "/icons/stc-icon-192.png?v=3", "/icons/stc-icon-512.png?v=3", "/icons/stc-apple-touch-icon.png?v=3"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));
