@@ -63,5 +63,5 @@ export default function App() {
   useEffect(() => { void fetch("/api/session").then(async (result) => { if (result.ok) setUser((await result.json()).user); }).finally(() => setChecking(false)); }, []);
   if (checking) return <main className="loading">A verificar sessão segura…</main>;
   if (!user) return <Login onLogin={setUser} />;
-  return <Workspace user={user} onLogout={() => { void fetch("/api/logout", { method: "POST" }).finally(() => setUser(null)); }} />;
+  return <Workspace user={user} onLogout={() => { setUser(null); void fetch("/api/logout", { method: "POST" }); }} />;
 }

@@ -128,8 +128,11 @@ async function listMovements(request: Request, env: Env) {
 }
 
 async function logout(request: Request, env: Env) {
-  const auth = await authenticate(request, env);
-  if (auth) await rest(env, `authentication_sessions?id=eq.${auth.sessionId}`, { method: "PATCH", body: JSON.stringify({ revoked_at: new Date().toISOString() }) });
+  const token = cookieValue(request);
+  if (token) {
+    const tokenHash = await sha256(token);
+    await rest(env, `authentication_sessions?token_hash=eq.${tokenHash}&revoked_at=is.null`, { method: "PATCH", body: JSON.stringify({ revoked_at: new Date().toISOString() }) });
+  }
   return response({ ok: true }, 200, { "set-cookie": `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0` });
 }
 
